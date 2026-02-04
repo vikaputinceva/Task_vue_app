@@ -12,52 +12,12 @@
 </head>
 <body>
    <div id="app">
-      <!-- <div class="product">
-
-
-       <div class="product-image">
-           <img :src="image" :alt="altText"/>
-       </div>
-       <div class="product-info">
-           <h1>{{ product }}</h1>
-           <p v-if="inventory > 10">In Stock</p>
-           <p v-else-if="inventory <= 10 && inventory > 0">Out of Stock</p> ПРАКТИЧЕСКАЯ 3
-           <p v-else>Out of Stock</p>
-           <span v-show="onSale">On Sale</span>
-       </div> 
-       <div>
-            <a :href="link">More products like this</a> практическая 2
-       </div> 
-
-       <div class="product-info">
-           <h1>{{ title }}</h1>
-           <p>{{sale}}</p>
-           <p :style="inStock ? '' : 'text-decoration: line-through' " > 
-                {{ inStock ? 'In stock' : 'Out of Stock' }}
-            </p>
-           <ul>
-            <li v-for="detail in details" > {{ detail }}</li>
-           </ul>
-           <div
-               class="color-box"
-               v-for="(variant, index) in variants"
-               :key="variant.variantId"
-               :style="{ backgroundColor:variant.variantColor }"
-               @mouseover="updateProduct(index)">           
-            </div>
-
-           <ul>
-            <li v-for="size in sizes" > {{ size }}</li>
-           </ul>
-           <div class="cart">
-            <p>Cart({{cart}})</p>
-           </div>
-           <button v-on:click="addToCart" :disabled="!inStock"
-           :class="{disabledButton: !inStock}">Add to cart</button>
-           <button v-on:click="delCart" :disabled="!inStock"
-           :class="{disabledButton: !inStock}">Delet to cart</button> 
-       </div> -->
-      <product></product>
+      <div class="cart">
+           <p>Cart({{ cart.length }})</p>
+      </div>
+     <product :premium="premium" @add-to-cart="updateCart" ></product> 
+     <!-- @delete-to-cart="remoteCart" -->
+</div>
    </div>
 
 </div>

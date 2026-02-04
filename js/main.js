@@ -28,9 +28,7 @@ Vue.component('product', {
            <p :style="inStock ? '' : 'text-decoration: line-through' " > 
                 {{ inStock ? 'In stock' : 'Out of Stock' }}
             </p>
-           <ul>
-            <li v-for="detail in details" > {{ detail }}</li>
-           </ul>
+            <product-details :details="details"></product-details>
            <div
                class="color-box"
                v-for="(variant, index) in variants"
@@ -38,11 +36,9 @@ Vue.component('product', {
                :style="{ backgroundColor:variant.variantColor }"
                @mouseover="updateProduct(index)">           
             </div>
-           <div class="cart">
-            <p>Cart({{cart}})</p>
-           </div>
            <button v-on:click="addToCart" :disabled="!inStock"
            :class="{disabledButton: !inStock}">Add to cart</button>
+           <button v-on:click="remoteCart">Remove from cart</button> 
        </div> `,
        data() {
            return {
@@ -65,13 +61,16 @@ Vue.component('product', {
                         variantQuantity: 0
                     }
                 ],
-                cart: 0
+                
             }        
         },
             methods: {
                 addToCart() {
-                    this.cart += 1
+                    this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
                 },
+                // remoteCart() {
+                //     this.$emit('delete-to-cart', this.variants[this.selectedVariant].variantId);
+                // },
                 updateProduct(index) {
                     this.selectedVariant = index;
                     console.log(index);
@@ -99,7 +98,17 @@ Vue.component('product', {
 let app = new Vue({
    el: '#app',
    data: {
-       premium: true
-   }
+       premium: true,
+       cart: []
+   },
+   methods: {
+        updateCart(id) {
+            this.cart.push(id);
+            },
+        // remoteCart() {
+        //     this.cart.pop();
+        // }
+    }
+
 })
 
