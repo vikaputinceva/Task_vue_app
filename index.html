@@ -18,18 +18,31 @@
        <div class="product-image">
            <img :src="image" :alt="altText"/>
        </div>
-
-       <div class="product-info">
+       <!-- <div class="product-info">
            <h1>{{ product }}</h1>
-           <p v-show="inventory > 10">In Stock</p>
-           <p v-else-if="inventory <= 10 && inventory > 0">Out of Stock</p>
+           <p v-if="inventory > 10">In Stock</p>
+           <p v-else-if="inventory <= 10 && inventory > 0">Out of Stock</p> ПРАКТИЧЕСКАЯ 3
            <p v-else>Out of Stock</p>
            <span v-show="onSale">On Sale</span>
-       </div>
+       </div> -->
        <!-- <div>
             <a :href="link">More products like this</a> практическая 2
        </div> -->
-       
+
+       <div class="product-info">
+           <h1>{{ product }}</h1>
+           <p v-if="inStock">In stock</p>
+           <p v-else>Out of Stock</p>
+           <ul>
+            <li v-for="detail in details" > {{ detail }}</li>
+           </ul>
+           <div v-for = "variant in variants" :key="variant.variantId">
+               <p> {{variant.variantColor }} </p>
+           </div>
+           <ul>
+            <li v-for="size in sizes" > {{ sizes }}</li>
+           </ul>
+       </div>
    </div>
 
 </div>
