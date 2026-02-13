@@ -21,33 +21,74 @@ Vue.component('product-tabs', {
          <span class="tab"
                :class="{ activeTab: selectedTab === tab }"
                v-for="(tab, index) in tabs"
+               :key="index"
                @click="selectedTab = tab"
          >{{ tab }}</span>
        </ul>
+       
+       <!-- Доп задание -->
        <div v-show="selectedTab === 'Reviews'">
          <p v-if="!reviews.length">There are no reviews yet.</p>
+         
+         <!-- фильтр по рейтингу -->
+         <div v-if="reviews.length" class="rating-filter">
+           <p>Filter by rating:</p>
+           <div class="filter-buttons">
+             <button 
+               @click="filterRating = null" 
+               :class="{ active: filterRating === null }"
+             >All ({{ reviews.length }})</button>
+             <button 
+               v-for="rating in [5,4,3,2,1]" 
+               :key="rating"
+               @click="filterRating = rating"
+               :class="{ active: filterRating === rating }"
+             >{{ rating }} ★ ({{ getCountByRating(rating) }})</button>
+           </div>
+         </div>
+         
+         <!-- список фильтра -->
          <ul>
-           <li v-for="review in reviews">
-           <p>{{ review.name }}</p>
-           <p>Rating: {{ review.rating }}</p>
-           <p>{{ review.review }}</p>
+           <li v-for="review in filteredReviews" :key="review.id || review.name + review.rating">
+             <p><strong>{{ review.name }}</strong> 
+                <span class="rating-stars">*****</span>
+                <span class="rating-value">{{ review.rating }}</span>
+             </p>
+             <p>{{ review.review }}</p>
+             <p>Recommend: {{ review.recomend }}</p>
+             <hr>
            </li>
          </ul>
        </div>
+       
        <div v-show="selectedTab === 'Make a Review'">
          <product-review></product-review>
        </div>
        <div v-show="selectedTab === 'Shipping'">
-              <p>Shipping: {{ shipping }}</p>  
+         <p>Shipping: {{ shipping }}</p>  
        </div>
        <div v-show="selectedTab === 'Details'">
-              <product-details :details="details"></product-details> 
+         <product-details :details="details"></product-details> 
        </div>
-     </div> `,
+     </div>`,
     data() {
         return {
             tabs: ['Reviews', 'Make a Review', 'Shipping', 'Details'],
-            selectedTab: 'Reviews'
+            selectedTab: 'Reviews',
+            filterRating: null  
+        }
+    },
+    computed: {
+        filteredReviews() {
+            if (this.filterRating === null) {
+                return this.reviews;
+            }
+            return this.reviews.filter(review => review.rating === this.filterRating);
+        }
+    },
+    methods: {
+        getCountByRating(rating) {
+            return this.reviews.filter(review => review.rating === rating).length;
         }
     }
 })
@@ -121,6 +162,7 @@ Vue.component('product-review', {
                     review: this.review,
                     rating: this.rating,
                     recomend: this.recomend,
+                    id: Date.now() + Math.random(),
                 }
                 eventBus.$emit('review-submitted', productReview)
                 this.name = null
