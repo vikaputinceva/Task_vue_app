@@ -12,11 +12,50 @@
 </head>
 <body>
    <div id="app">
-      <div class="cart">
-           <p>Cart({{ cart.length }})</p>
-      </div>
-     <product :premium="premium" @add-to-cart="updateCart" ></product> 
-     <!-- @delete-to-cart="remoteCart" -->
+<!--         <h1>{{ product }}</h1>  1 практическая-->
+<!--         <p>{{description}}</p>-->
+<!--       <div class="product">-->
+
+<!--       <div class="product-image">-->
+<!--           <img :src="image" :alt="altText"/>-->
+<!--       </div>-->
+
+<!--       <div class="product-info">  2 практическая-->
+<!--           <h1>{{ product }}</h1>-->
+<!--       </div>-->
+<!--       <div>-->
+<!--            <a :href="link">More products like this</a>-->
+<!--       </div>-->
+<!--   </div>-->
+<!--          <p v-show="inventory > 10">In Stock</p>-->
+<!--           <p v-else-if="inventory <= 10 && inventory > 0">Out of Stock</p>-->
+<!--           <p v-else>Out of Stock</p> практическая -->
+<!--           <span v-show="onSale">On Sale</span>-->
+<!--      <span v-show="onSale">On Sale</span> практическая 3-->
+<!--      <ul>-->
+<!--            <li v-for="size in sizes" > {{ sizes }}</li> практическая 4-->
+<!--      </ul>-->
+<!--   <div class="cart">-->
+<!--            <p>Cart({{cart}})</p>-->
+<!--           </div>-->
+<!--           <button v-on:click="addToCart">Add to cart</button>  -->
+<!--           <button v-on:click="delCart">Delet to cart</button>  практическая 5 -->
+
+<!--      <div class="cart">-->
+<!--           <p>Cart({{ cart.length }})</p>-->
+<!--      </div>-->
+<!--      <p :style="inStock ? '' : 'text-decoration: line-through' " > -->
+<!--                {{ inStock ? 'In stock' : 'Out of Stock' }}  практическая 6-->
+<!--            </p>-->
+<!--        <p>{{sale}}</p> практическая 7-->
+<!--       <product-details :details="details"></product-details> практическая 8-->
+      <!-- @delete-to-cart="remoteCart" практическая 9-->
+   <div class="cart">
+       <p>Cart({{ cart.length }})</p>
+   </div>
+     <product :premium="premium" @add-to-cart="updateCart"
+              @delete-to-cart="remoteCart"></product>
+
 </div>
    </div>
 

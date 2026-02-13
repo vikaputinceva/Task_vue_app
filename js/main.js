@@ -1,3 +1,51 @@
+// let app = new Vue ({
+//     el: '#app',
+//     data: {
+//         product: "Socks",         Первая практическая
+//         description: " A pair of warm, fuzzy socks"
+//          image: "./assets/vmSocks-blue-onWhite.jpg",
+//         altText: "A pair of socks", Вторая практическая
+//         link: "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks"
+//         inStock: true,
+//         inventory: 100,
+//         onSale: true, практическая 3
+//         sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'] практическая 4
+//         cart: 0,
+//     },
+
+
+     // methods: {
+     //        addToCart() {
+     //            this.cart += 1
+     //        },
+     //        delCart() {
+     //            this.cart -= 1           практическая 5
+     //        },
+     //        updateProduct(variantImage) {
+     //    this.image = variantImage
+     //    }
+     //    },
+//      computed: {
+//                      title() {
+//                          return this.brand + ' ' + this.product;
+//                              },
+//                      image() {
+//                          return this.variants[this.selectedVariant].variantImage;
+//                              },
+//                      inStock(){
+//                          return this.variants[this.selectedVariant].variantQuantity
+//                              },
+//                      sale(){
+//                          return (this.onSale ? 'skidka net ' : 'skidka est ')
+//                          + ' this ' + this.product + ' for brand: ' + this.brand;
+//                      }
+//      })
+//
+// Vue.component('product-details', {
+//     props: {
+//         details: {       практическая 8
+//             required: true
+//         }
 let eventBus = new Vue()
 
 Vue.component('product-tabs', {
@@ -230,6 +278,8 @@ Vue.component('product', {
             </div>
            <button v-on:click="addToCart" :disabled="!inStock"
            :class="{disabledButton: !inStock}">Add to cart</button>
+           <button v-on:click="remoteCart" 
+           >del to cart</button>
            <div>
            <product-tabs :shipping="shipping" :reviews="reviews" :details="details"></product-tabs>
             `,
@@ -262,9 +312,9 @@ Vue.component('product', {
                 addToCart() {
                     this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
                 },
-                // remoteCart() {
-                //     this.$emit('delete-to-cart', this.variants[this.selectedVariant].variantId);
-                // },
+                remoteCart() {
+                this.$emit('delete-to-cart', this.variants[this.selectedVariant].variantId);
+                },
                 updateProduct(index) {
                     this.selectedVariant = index;
                     console.log(index);
@@ -304,9 +354,9 @@ let app = new Vue({
         updateCart(id) {
             this.cart.push(id);
             },
-        // remoteCart() {
-        //     this.cart.pop();
-        // }
+        remoteCart() {
+           this.cart.pop();
+         }
     }
 
 })
